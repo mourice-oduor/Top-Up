@@ -10,7 +10,10 @@ html {
   --light: #f2f2f2;
   --dark: #111111;
 }
-
+main {
+  margin-top: 3rem;
+  height: 75vh;
+}
 .fw-medium {
   font-weight: 600 !important;
 }
