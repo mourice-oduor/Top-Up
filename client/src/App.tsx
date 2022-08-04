@@ -32,8 +32,8 @@ function App() {
       <main>
         <Container>
           <Routes>
-            <Route path="/" element={<Home firstName={firstName}/>} />
-            <Route path="/home" element={<Home firstName={firstName} />} />
+            <Route path="/" element={<Home/>} />
+            <Route path="/home" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
