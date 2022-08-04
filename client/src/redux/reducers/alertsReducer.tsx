@@ -1,18 +1,18 @@
-interface initialData {
-  loading: boolean;
-}
+// interface State {
+//   loading: boolean;
+// }
 
 interface Action {
   type: string;
   payload?: any;
 }
 
-export const alertsReducer = (state: initialData, action: Action ) => {
+export const alertsReducer = (state = {}, action: Action) => {
   switch (action.type) {
     case "LOADING": {
       return {
         ...state,
-        loading: action.payload,
+        loading: true,
       };
     }
     default:

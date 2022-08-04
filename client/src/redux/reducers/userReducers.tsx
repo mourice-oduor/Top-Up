@@ -1,3 +1,4 @@
+import { string } from "yup/lib/locale";
 import {
     LOGIN_REQUEST,
     LOGIN_FAIL,
@@ -27,10 +28,6 @@ import {
     ALL_USERS_REQUEST,
     ALL_USERS_SUCCESS,
     ALL_USERS_FAIL,
-    DELETE_USER_REQUEST,
-    DELETE_USER_SUCCESS,
-    DELETE_USER_FAIL,
-    DELETE_USER_RESET,
     UPDATE_USER_REQUEST,
     UPDATE_USER_SUCCESS,
     UPDATE_USER_FAIL,
@@ -41,13 +38,27 @@ import {
     CLEAR_ERRORS,
 } from "../constants/userConstants";
 
-interface Action{
+interface IAction{
   type: string;
-  payload?: any;
+  payload?: string;
 
 }
+
+export interface IUserState {
+  loading? : boolean,
+  isAuthenticated?: boolean,
+  error?: string,
+  userInfo: { first_name?: string; last_name?: string }
+}
+
+// const initialState = {
+//   loading: false,
+//   isAuthenticated: false,
+//   error: null,
+//   userInfo: null
+// }
   
-export const userReducer = (state = { user: {} }, action: Action ) => {
+export const userReducer = ( state: IUserState = { userInfo: {} } , action: IAction ): any => {
     switch (action.type) {
       case LOGIN_REQUEST:
       case REGISTER_USER_REQUEST:
@@ -60,16 +71,15 @@ export const userReducer = (state = { user: {} }, action: Action ) => {
       case REGISTER_USER_SUCCESS:
       case LOAD_USER_SUCCESS:
         return {
-          ...state,
           loading: false,
           isAuthenticated: true,
-          user: action.payload,
+          userInfo: action.payload,
         };
   
       case LOGOUT_SUCCESS:
         return {
           loading: false,
-          user: null,
+          userInfo: null,
           isAuthenticated: false,
         };
       case LOGIN_FAIL:
@@ -78,7 +88,7 @@ export const userReducer = (state = { user: {} }, action: Action ) => {
           ...state,
           loading: false,
           isAuthenticated: false,
-          user: null,
+          userInfo: null,
           error: action.payload,
         };
   
@@ -86,7 +96,7 @@ export const userReducer = (state = { user: {} }, action: Action ) => {
         return {
           loading: false,
           isAuthenticated: false,
-          user: null,
+          userInfo: null,
           error: action.payload,
         };
   
@@ -108,12 +118,11 @@ export const userReducer = (state = { user: {} }, action: Action ) => {
     }
 };
   
-export const profileReducer = (state = {}, action: { type: string; payload: { success: string; message: string; }; }) => {
+export const profileReducer = (state = {}, action: IAction ) => {
     switch (action.type) {
       case UPDATE_PROFILE_REQUEST:
       case UPDATE_PASSWORD_REQUEST:
       case UPDATE_USER_REQUEST:
-      case DELETE_USER_REQUEST:
         return {
           ...state,
           loading: true,
@@ -127,18 +136,9 @@ export const profileReducer = (state = {}, action: { type: string; payload: { su
           isUpdated: action.payload,
         };
   
-      case DELETE_USER_SUCCESS:
-        return {
-          ...state,
-          loading: false,
-          isDeleted: action.payload.success,
-          message: action.payload.message,
-        };
-  
       case UPDATE_PROFILE_FAIL:
       case UPDATE_PASSWORD_FAIL:
       case UPDATE_USER_FAIL:
-      case DELETE_USER_FAIL:
         return {
           ...state,
           loading: false,
@@ -153,12 +153,6 @@ export const profileReducer = (state = {}, action: { type: string; payload: { su
           isUpdated: false,
         };
   
-      case DELETE_USER_RESET:
-        return {
-          ...state,
-          isDeleted: false,
-        };
-  
       case CLEAR_ERRORS:
         return {
           ...state,
@@ -170,7 +164,7 @@ export const profileReducer = (state = {}, action: { type: string; payload: { su
     }
 };
   
-export const forgotPasswordReducer = (state = {}, action: Action ) => {
+export const forgotPasswordReducer = (state = {}, action: IAction ) => {
     switch (action.type) {
       case FORGOT_PASSWORD_REQUEST:
       case RESET_PASSWORD_REQUEST:
@@ -212,7 +206,7 @@ export const forgotPasswordReducer = (state = {}, action: Action ) => {
     }
 };
   
-export const allUsersReducer = (state = { users: [] }, action: Action ) => {
+export const allUsersReducer = (state = {}, action: IAction ) => {
     switch (action.type) {
       case ALL_USERS_REQUEST:
         return {
@@ -244,7 +238,7 @@ export const allUsersReducer = (state = { users: [] }, action: Action ) => {
     }
 };
   
-export const userDetailsReducer = (state = { user: {} }, action: Action ) => {
+export const userDetailsReducer = (state = {}, action: IAction ) => {
     switch (action.type) {
       case USER_DETAILS_REQUEST:
         return {
@@ -255,7 +249,7 @@ export const userDetailsReducer = (state = { user: {} }, action: Action ) => {
         return {
           ...state,
           loading: false,
-          user: action.payload,
+          userInfo: action.payload,
         };
   
       case USER_DETAILS_FAIL:

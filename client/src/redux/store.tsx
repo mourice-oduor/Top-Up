@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-
 import {
   allUsersReducer,
   forgotPasswordReducer,
@@ -7,37 +6,37 @@ import {
   userDetailsReducer,
   userReducer,
 } from "./reducers/userReducers";
-
 import { alertsReducer } from "./reducers/alertsReducer";
-import { createBrowserHistory } from "history";
-import { routerMiddleware, connectRouter } from "connected-react-router";
 
-export const history = createBrowserHistory();
+const userInfoFromStorage = localStorage.getItem("userInfo")
+  ? JSON.parse(localStorage.getItem("userInfo")!)
+  : undefined;
 
-const rootReducer = (history: any) => ({
-  user: userReducer,
-  profile: profileReducer,
-  forgotPassword: forgotPasswordReducer,
-  allUsers: allUsersReducer,
-  userDetails: userDetailsReducer,
-  alerts: alertsReducer,
-  router: connectRouter(history),
-});
-
-// const userInfoFromStorage = localStorage.getItem("user")
-//   ? JSON.parse(localStorage.getItem("user"))
-//   : null;
-
-// const initialState = {
-//   userLogin: { user: userInfoFromStorage },
-// };
+const initialState = {
+  user: { userInfo: userInfoFromStorage },
+} as {};
 
 const preloadedState = {};
-const store = configureStore({
-  middleware: (getDefaultMiddleware: () => string | any[]) =>
-    getDefaultMiddleware().concat(routerMiddleware(history)),
-  reducer: rootReducer(history),
+
+export const store = configureStore({
+  reducer: {
+    user: userReducer,
+    profile: profileReducer,
+    forgotPassword: forgotPasswordReducer,
+    allUsers: allUsersReducer,
+    userDetails: userDetailsReducer,
+    alerts: alertsReducer,
+  },
+
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
+
+  // initialState,
   preloadedState,
 });
 
-export default store;
+export type RootState = ReturnType<typeof store.getState>;
+
+export type AppDispatch = typeof store.dispatch;
