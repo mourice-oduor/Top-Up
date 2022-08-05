@@ -1,4 +1,3 @@
-import { string } from "yup/lib/locale";
 import {
     LOGIN_REQUEST,
     LOGIN_FAIL,
@@ -50,13 +49,6 @@ export interface IUserState {
   error?: string,
   userInfo: { first_name?: string; last_name?: string }
 }
-
-// const initialState = {
-//   loading: false,
-//   isAuthenticated: false,
-//   error: null,
-//   userInfo: null
-// }
   
 export const userReducer = ( state: IUserState = { userInfo: {} } , action: IAction ): any => {
     switch (action.type) {
