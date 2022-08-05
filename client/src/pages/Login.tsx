@@ -1,24 +1,22 @@
 import { SetStateAction, SyntheticEvent, useEffect, useState } from "react";
 import { Form, Button } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
 import FormContainer from "../components/FormContainer";
 import { login } from "../redux/actions/userActions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
+import { RootState } from '../redux/store';
 
-const Login = () => {
+function Login(){
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const userLogin = useAppSelector((state) => state.user);
+  const userLogin = useAppSelector((state: RootState) => state.user);
 
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
 
   const { userInfo } = userLogin
   useEffect(() => {
     if (userInfo !== undefined && userInfo) {
       console.log(userInfo);
-      navigate("/");
     }
   }, [userInfo]);
 
