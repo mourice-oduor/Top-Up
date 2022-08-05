@@ -12,7 +12,7 @@ export const alertsReducer = (state = {}, action: Action) => {
     case "LOADING": {
       return {
         ...state,
-        loading: true,
+        loading: action.payload,
       };
     }
     default:
