@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useState, useEffect } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import Header from './components/Header'
@@ -8,7 +9,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Home from "./pages/Home";
 import Profile from "./components/Profile";
-import { useState, useEffect } from "react";
+import Users from "./components/Users";
 
 function App() {
 
@@ -16,9 +17,10 @@ function App() {
 
   useEffect(() => {
     ;(async () => {
-      const response = await fetch('https://reqres.in/api/users/2', {
+      const response = await fetch('https://reqres.in/api/users/3', {
         headers: { 'Content-Type': 'application/json' },
         credentials: 'include',
+        mode: 'cors'
       })
       
       const data = await response.json()
@@ -32,11 +34,11 @@ function App() {
       <main>
         <Container>
           <Routes>
-            <Route path="/" element={<Home/>} />
-            <Route path="/home" element={<Home />} />
+            <Route path="/" element={<Home />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="/users" element={<Users />} />
           </Routes>
         </Container>
       </main>
