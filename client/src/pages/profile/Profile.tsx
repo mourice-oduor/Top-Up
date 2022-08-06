@@ -1,11 +1,7 @@
-import { Button } from "react-bootstrap";
-import { ProfilePageProps } from "./index";
 import { getCurrentUser } from "../../redux/actions/userActions";
 import { Link } from "react-router-dom";
-// import "./Profile.css";
 
 function Profile() {
-  // const { logout } = props;
   const currentUser = getCurrentUser();
 
   return (
@@ -15,7 +11,7 @@ function Profile() {
         {/* currentUser?.data?.avatar?.url */}
         <img
           src={"https://reqres.in/img/faces/2-image.jpg"}
-          alt={currentUser?.data?.first_name}
+          alt={currentUser?.first_name}
           style={{ display: "block", width: "30vh", height: 'auto', margin: '5%' }}
         />
         <Link to="/profile/edit">Edit Profile</Link>
@@ -37,10 +33,10 @@ function Profile() {
           <p>{currentUser.email}</p>
         </div>
 
-        {/* <p>
-          <strong>Token:</strong> {currentUser?.accessToken.substring(0, 20)} ...{" "}
-          {currentUser?.accessToken.substr(currentUser?.accessToken.length - 20)}
-        </p> */}
+        <p>
+          <strong>Token:</strong> {currentUser.token.substring(0, 20)} ...{" "}
+          {currentUser.token.substr(currentUser?.token.length - 20)}
+        </p>
         <p>
           <strong>Id:</strong> {currentUser?.id}
         </p>
