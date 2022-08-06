@@ -1,13 +1,19 @@
 import { SetStateAction, SyntheticEvent, useEffect, useState } from "react";
-import { Form, Button } from "react-bootstrap";
+import { Button } from "react-bootstrap";
 import FormContainer from "../components/FormContainer";
 import { login } from "../redux/actions/userActions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { RootState } from '../redux/store';
+import { Formik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 function Login(){
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  const [message, setMessage] = useState<string>("");
+  const [loading, setLoading] = useState<boolean>(false);
+
+
 
   const userLogin = useAppSelector((state: RootState) => state.user);
 
@@ -20,45 +26,95 @@ function Login(){
     }
   }, [userInfo]);
 
-  const submitHandler = async (e: SyntheticEvent) => {
-    e.preventDefault();
+  const initialValues: {
+    email: string;
+    password: string;
+  } = {
+    email: "",
+    password: "",
+  };
 
+  const validationSchema = Yup.object().shape({
+    email: Yup.string()
+      .email("This is not a valid email.")
+      .required("This field is required!"),
+    password: Yup.string()
+      .test(
+        "len",
+        "The password must be between 8 and 20 characters.",
+        (val: any) =>
+          val &&
+          val.toString().length >= 6 &&
+          val.toString().length <= 20
+      )
+      .required("This field is required!"),
+  });
+
+  const submitHandler = async (formValue: { email: string; password: string }) => {
+    const { email, password } = formValue;
+
+    setMessage("");
+    setLoading(true);
     dispatch(login(email, password ));
   };
 
   return (
-    <FormContainer>
-      <h1>Login</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group controlId="email" className="my-3">
-          <Form.Label>Email address</Form.Label>
-          <Form.Control
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
-              setEmail(e.target.value)
-            }
-          />
-        </Form.Group>
+    <div className="col-md-12">
+      <div className="card card-container">
+        <img
+          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
+          alt="profile-img"
+          className="profile-img-card"
+          width={100}
+          height={80}
+          style={{margin: 'auto', paddingTop: '10px'}}
+        />
+        <Formik
+          initialValues={initialValues}
+          validationSchema={validationSchema}
+          onSubmit={submitHandler}
+        >
+          <Form>
+            <div className="form-group m-3">
+              <label htmlFor="email">Email</label>
+              <Field name="email" type="email" className="form-control" />
+              <ErrorMessage
+                name="email"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
 
-        <Form.Group controlId="password" className="my-3">
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e: { target: { value: SetStateAction<string> } }) =>
-              setPassword(e.target.value)
-            }
-          />
-        </Form.Group>
+            <div className="form-group m-3">
+              <label htmlFor="password">Password</label>
+              <Field name="password" type="password" className="form-control" />
+              <ErrorMessage
+                name="password"
+                component="div"
+                className="alert alert-danger"
+              />
+            </div>
 
-        <Button variant="primary" type="submit" className="my-3">
-          Login
-        </Button>
-      </Form>
-    </FormContainer>
+            <div className="form-group m-3">
+              <button type="submit" className="btn btn-primary btn-block" disabled={loading}>
+                {loading && (
+                  <span className="spinner-border spinner-border-sm"></span>
+                )}
+                <span>Login</span>
+              </button>
+            </div>
+
+            {message && (
+              <div className="form-group">
+                <div className="alert alert-danger" role="alert">
+                  {message}
+                </div>
+              </div>
+            )}
+          </Form>
+        </Formik>
+      </div>
+    </div>
   );
 };
 
