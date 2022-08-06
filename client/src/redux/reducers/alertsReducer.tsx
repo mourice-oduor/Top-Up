@@ -1,7 +1,3 @@
-// interface State {
-//   loading: boolean;
-// }
-
 interface Action {
   type: string;
   payload?: any;
