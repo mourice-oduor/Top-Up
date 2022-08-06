@@ -3,13 +3,10 @@ import { Navbar, Nav, Container } from "react-bootstrap";
 import { useAppDispatch } from "../redux/hooks/hooks";
 import { logout } from "../redux/actions/userActions";
 
-interface Props {
-  firstName: string;
-  setFirstName: (firstName: string) => void;
-}
 
-// function Header({ firstName, setFirstName }: Props) {
 function Header() {
+  // @ts-ignore
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const dispatch = useAppDispatch();
 
@@ -17,24 +14,24 @@ function Header() {
     e.preventDefault();
 
     dispatch(logout());
-    // setFirstName("");
   };
 
   return (
     <Navbar bg="dark" variant="dark" expand="lg" collapseOnSelect sticky="top">
       <Container>
-        <Navbar.Brand href="/">Top-Up Mama</Navbar.Brand>
+        <Navbar.Brand >Top-Up Mama</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
 
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link href="/users">Users</Nav.Link>
-            <Nav.Link href="/profile">Profile</Nav.Link>
+            <Nav.Link href="/">Home</Nav.Link>
           </Nav>
 
           <Nav>
-            {{} ? (
+            {localStorage.getItem("userInfo") ? (
               <Nav className="ms-auto">
+                <Nav.Link href="/users">Users</Nav.Link>
+                <Nav.Link href="/profile">Profile</Nav.Link>
                 <Nav.Link onClick={logoutHandler}>Logout</Nav.Link>
               </Nav>
             ) : (
@@ -45,7 +42,6 @@ function Header() {
             )}
           </Nav>
         </Navbar.Collapse>
-        
       </Container>
     </Navbar>
   );
