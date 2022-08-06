@@ -13,9 +13,6 @@ import Users from "./pages/Users";
 // import PrivateRoute from "./components/PrivateRoute";
 
 function App() {
-  // @ts-ignore
-  const user = JSON.parse(localStorage.getItem("userInfo"));
-
   return (
     <BrowserRouter>
       <Header />
