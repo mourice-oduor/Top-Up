@@ -15,6 +15,7 @@ const initialState = {
   user: { userInfo: userInfoFromStorage },
 } as {};
 
+
 const preloadedState = {};
 
 export const store = configureStore({
