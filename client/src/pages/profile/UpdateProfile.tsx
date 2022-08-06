@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import "./UpdateProfile.css";
-import { clearErrors, updateProfile, loadUser } from "../../redux/actions/userActions";
-import { UPDATE_PROFILE_RESET } from "../../redux/constants/userConstants";
+import { updateProfile } from "../../redux/actions/userActions";
 import { useAppSelector, useAppDispatch } from "../../redux/hooks/hooks";
 import { RootState } from '../../redux/store';
 import { BsFillBriefcaseFill, BsPersonCircle } from 'react-icons/bs';
@@ -12,13 +11,9 @@ const UpdateProfile = () => {
   const [firstname, setFirstName] = useState("");
   const [lastname, setLastName] = useState("");
   const [email, setEmail] = useState("");
-  // const [avatar, setAvatar] = useState();
-  // const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
 
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state: RootState) => state.user );
-  // const { error, isUpdated, loading } = useAppSelector((state: RootState) => state.profile);
-
 
   const updateProfileSubmit = (e: { preventDefault: () => void; }) => {
     e.preventDefault();
@@ -28,22 +23,9 @@ const UpdateProfile = () => {
     myForm.set("firstname", firstname);
     myForm.set("firstname", lastname);
     myForm.set("email", email);
-    // myForm.set("avatar", avatar);
+
     dispatch(updateProfile(myForm));
   };
-
-  // const updateProfileDataChange = (e: { target: { files: Blob[]; }; }) => {
-  //   const reader = new FileReader();
-
-  //   reader.onload = () => {
-  //     if (reader.readyState === 2) {
-  //       setAvatarPreview(reader.result);
-  //       setAvatar(reader.result);
-  //     }
-  //   };
-
-  //   reader.readAsDataURL(e.target.files[0]);
-  // };
 
   useEffect(() => {
     if (user) {
@@ -52,17 +34,6 @@ const UpdateProfile = () => {
       setEmail(user.email);
     }
 
-    // if (error) {
-    //   dispatch(clearErrors());
-    // }
-
-    // if (isUpdated) {
-    //   dispatch(loadUser());
-
-    //   dispatch({
-    //     type: UPDATE_PROFILE_RESET,
-    //   });
-    // }
   }, [dispatch, user]);
   return (
     <div>

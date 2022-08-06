@@ -8,19 +8,13 @@ function Profile() {
     <div className="profileContainer">
       <div className="m-5 p-2">
         <h1>My Profile</h1>
-        {/* currentUser?.data?.avatar?.url */}
         <img
-          src={"https://reqres.in/img/faces/2-image.jpg"}
+          src={currentUser?.avatar?.url}
           alt={currentUser?.first_name}
           style={{ display: "block", width: "30vh", height: 'auto', margin: '5%' }}
         />
         <Link to="/profile/edit">Edit Profile</Link>
       </div>
-      {/* <header className="jumbotron">
-        <h3>
-          <strong>{currentUser?.email}</strong> Profile
-        </h3>
-      </header> */}
 
       <div>
         <div>
@@ -42,12 +36,6 @@ function Profile() {
         </p>
 
       </div>
-      
-
-      {/* <Button className="mb-5" color="primary" onClick={() => logout()}>
-        {" "}
-        Sign Out
-      </Button> */}
     </div>
   );
 }
