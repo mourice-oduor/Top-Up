@@ -21,7 +21,7 @@ const Users = () => {
 
   return (
     <div>
-      <h4> Total Users - {users?.length}</h4>
+      <h4> Total Users - {users.length}</h4>
       <table className="table table-striped table-bordered table-responsive-sm">
         <thead className="thead-dark">
           <tr>
