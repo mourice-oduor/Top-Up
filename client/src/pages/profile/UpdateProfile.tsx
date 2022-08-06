@@ -17,7 +17,7 @@ const UpdateProfile = () => {
 
   const dispatch = useAppDispatch();
   const { user } = useAppSelector((state: RootState) => state.user );
-  const { error, isUpdated, loading } = useAppSelector((state: RootState) => state.profile);
+  // const { error, isUpdated, loading } = useAppSelector((state: RootState) => state.profile);
 
 
   const updateProfileSubmit = (e: { preventDefault: () => void; }) => {
@@ -52,24 +52,21 @@ const UpdateProfile = () => {
       setEmail(user.email);
     }
 
-    if (error) {
-      dispatch(clearErrors());
-    }
+    // if (error) {
+    //   dispatch(clearErrors());
+    // }
 
-    if (isUpdated) {
-      dispatch(loadUser());
+    // if (isUpdated) {
+    //   dispatch(loadUser());
 
-      dispatch({
-        type: UPDATE_PROFILE_RESET,
-      });
-    }
-  }, [dispatch, error, user, isUpdated]);
+    //   dispatch({
+    //     type: UPDATE_PROFILE_RESET,
+    //   });
+    // }
+  }, [dispatch, user]);
   return (
     <div>
-      {loading ? (
-        loading
-      ) : (
-        <div>
+      <div>
           <div className="updateProfileContainer">
             <div className="updateProfileBox">
               <h2 className="updateProfileHeading">Update Profile</h2>
@@ -123,7 +120,6 @@ const UpdateProfile = () => {
             </div>
           </div>
         </div>
-      )}
     </div>
   );
 };
