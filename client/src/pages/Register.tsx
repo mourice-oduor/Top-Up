@@ -12,8 +12,6 @@ interface IUser {
 }
 
 function Register() {
-  // const [email, setEmail] = useState('')
-  // const [password, setPassword] = useState('')
   const [successful, setSuccessful] = useState<boolean>(false);
   const [message, setMessage] = useState<string>("");
 
