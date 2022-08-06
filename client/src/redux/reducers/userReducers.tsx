@@ -44,11 +44,11 @@ export interface IUserState {
   userInfo: { first_name?: string; last_name?: string }
 }
 
-export interface IUserProfile {
-  loading? : boolean,
-  isUpdated?: boolean,
-  error?: string,
-}
+// export interface IUserProfile {
+//   loading? : boolean,
+//   isUpdated?: boolean,
+//   error?: string,
+// }
   
 export const userReducer = ( state: IUserState = { userInfo: {} } , action: IAction ): any => {
     switch (action.type) {
@@ -110,7 +110,7 @@ export const userReducer = ( state: IUserState = { userInfo: {} } , action: IAct
     }
 };
   
-export const profileReducer = (state: IUserProfile = {}, action: IAction) => {
+export const profileReducer = (state = {}, action: IAction) => {
   switch (action.type) {
     case UPDATE_PROFILE_REQUEST:
     case UPDATE_USER_REQUEST:
