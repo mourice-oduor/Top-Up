@@ -1,6 +1,4 @@
-import { SetStateAction, SyntheticEvent, useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import FormContainer from "../components/FormContainer";
+import { useEffect, useState } from "react";
 import { login } from "../redux/actions/userActions";
 import { useAppDispatch, useAppSelector } from "../redux/hooks/hooks";
 import { RootState } from '../redux/store';
@@ -60,6 +58,7 @@ function Login(){
 
   return (
     <div className="col-md-12">
+      <h2>Login</h2>
       <div className="card card-container">
         <img
           src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
